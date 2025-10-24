@@ -1,0 +1,368 @@
+/* ----------------------- */
+/* 🧱 Base + Variables */
+/* ----------------------- */
+
+:root {
+    /* 🎨 Default Colors (Dark theme) */
+    --color-bg: #121212;
+    --color-text: rgba(255, 255, 255, 0.92);
+    --color-link: #c9d1d9;
+    --color-link-hover: #58a6ff;
+    --color-navbar-bg: #181818;
+    --color-navbar-hover: #242424;
+    --color-active-bg: #242424;
+    --color-active-border: #58a6ff;
+    --color-button-bg: #2d2d2d;
+    --color-button-text: #e6e6e6;
+    --color-button-hover-bg: #1f1f1f;
+    --color-button-border: #58a6ff;
+
+    /* 🎨 Todo Specific Colors */
+    --color-todo-bg: #1e1e1e;
+    --color-todo-card: #2d2d2d;
+    --color-todo-border: #404040;
+    --color-todo-completed: #58a6ff;
+    --color-todo-progress: #58a6ff;
+    --color-todo-shadow: rgba(0, 0, 0, 0.3);
+
+    /* 🎨 Status Colors */
+    --color-status-pending: #ffa726;
+    --color-status-inprogress: #42a5f5;
+    --color-status-done: #66bb6a;
+}
+
+/* 🎨 Light Theme */
+[data-theme="light"] {
+    --color-bg: #ffffff;
+    --color-text: #1a1a1a;
+    --color-link: #1a1a1a;
+    --color-link-hover: #007bff;
+    --color-navbar-bg: #ffffff;
+    --color-navbar-hover: #f1f3f5;
+    --color-active-bg: #f1f3f5;
+    --color-active-border: #007bff;
+    --color-button-bg: #f8f9fa;
+    --color-button-text: #1a1a1a;
+    --color-button-hover-bg: #e9ecef;
+    --color-button-border: #007bff;
+    --color-todo-bg: #f8f9fa;
+    --color-todo-card: #ffffff;
+    --color-todo-border: #dee2e6;
+    --color-todo-completed: #007bff;
+    --color-todo-progress: #007bff;
+    --color-todo-shadow: rgba(0, 0, 0, 0.1);
+    --color-status-pending: #ff9800;
+    --color-status-inprogress: #2196f3;
+    --color-status-done: #4caf50;
+}
+
+/* ----------------------- */
+/* 🌐 General Styles */
+/* ----------------------- */
+
+:root {
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+
+/* ----------------------- */
+/* 🎯 Todos Wrapper */
+/* ----------------------- */
+
+.todos-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    background-color: var(--color-bg);
+    display: flex;
+    position: fixed;
+    top: 0%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.todos-container {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--color-todo-bg);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 32px var(--color-todo-shadow);
+    border: 1px solid var(--color-todo-border);
+}
+
+.todos-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.todos-header h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.2rem;
+    color: var(--color-text);
+    font-weight: 700;
+}
+
+.todos-header p {
+    margin: 0;
+    color: var(--color-text);
+    opacity: 0.8;
+    font-size: 1rem;
+}
+
+/* ----------------------- */
+/* ❌ Error Message */
+/* ----------------------- */
+
+.error-message {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideIn 0.3s ease;
+}
+
+.dismiss-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dismiss-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+/* ----------------------- */
+/* ➕ Add Todo Section */
+/* ----------------------- */
+
+.add-todo-section {
+    margin-bottom: 25px;
+}
+
+.input-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.todo-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid var(--color-todo-border);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: var(--color-todo-card);
+    color: var(--color-text);
+}
+
+.todo-input:focus {
+    border-color: var(--color-active-border);
+    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+.todo-input::placeholder {
+    color: var(--color-text);
+    opacity: 0.5;
+}
+
+.add-btn {
+    padding: 12px 20px;
+    background-color: var(--color-button-bg);
+    color: var(--color-button-text);
+    border: 1px solid var(--color-todo-border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.add-btn:hover:not(:disabled) {
+    background-color: var(--color-button-hover-bg);
+    border-color: var(--color-button-border);
+    transform: translateY(-1px);
+}
+
+.add-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ----------------------- */
+/* 📊 Progress Section */
+/* ----------------------- */
+
+.progress-section {
+    margin-bottom: 25px;
+    background-color: var(--color-todo-card);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--color-todo-border);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: var(--color-todo-border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--color-todo-progress);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.progress-stats {
+    text-align: center;
+}
+
+.progress-stats span {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    opacity: 0.8;
+}
+
+/* ----------------------- */
+/* 📝 Todos List */
+/* ----------------------- */
+
+.todos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.todos-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.todos-list::-webkit-scrollbar-track {
+    background: var(--color-todo-border);
+    border-radius: 3px;
+}
+
+.todos-list::-webkit-scrollbar-thumb {
+    background: var(--color-todo-progress);
+    border-radius: 3px;
+}
+
+/* ----------------------- */
+/* 🔄 Loading State */
+/* ----------------------- */
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--color-text);
+    opacity: 0.7;
+    font-size: 1.1rem;
+}
+
+/* ----------------------- */
+/* 📭 Empty State */
+/* ----------------------- */
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: var(--color-todo-card);
+    border-radius: 8px;
+    border: 2px dashed var(--color-todo-border);
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+.empty-state h3 {
+    margin: 0 0 10px 0;
+    color: var(--color-text);
+    font-size: 1.3rem;
+}
+
+.empty-state p {
+    margin: 0;
+    color: var(--color-text);
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* ----------------------- */
+/* 📱 Responsive Design */
+/* ----------------------- */
+
+@media (max-width: 768px) {
+    .todos-wrapper {
+        padding: 15px;
+        align-items: flex-start;
+    }
+
+    .todos-container {
+        padding: 20px;
+        margin-top: 20px;
+        max-width: 100%;
+    }
+
+    .todos-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .todo-input {
+        width: 100%;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .todos-container {
+        padding: 16px;
+    }
+
+    .todos-header h1 {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,142 @@
+/* ----------------------- */
+/* 🧱 پایه (Base + Variables) */
+/* ----------------------- */
+
+:root {
+  /* 🎨 رنگ‌های پیش‌فرض (Dark theme by default) */
+  --color-bg: #121212;
+  --color-text: rgba(255, 255, 255, 0.92);
+  --color-link: #c9d1d9;
+  --color-link-hover: #58a6ff;
+  --color-navbar-bg: #181818;
+  --color-navbar-hover: #242424;
+  --color-active-bg: #242424;
+  --color-active-border: #58a6ff;
+  --color-button-bg: #2d2d2d;
+  --color-button-text: #e6e6e6;
+  --color-button-hover-bg: #1f1f1f;
+  --color-button-border: #58a6ff;
+}
+
+/* 🎨 حالت روشن */
+[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-link: #1a1a1a;
+  --color-link-hover: #007bff;
+  --color-navbar-bg: #ffffff;
+  --color-navbar-hover: #f1f3f5;
+  --color-active-bg: #f1f3f5;
+  --color-active-border: #007bff;
+  --color-button-bg: #f8f9fa;
+  --color-button-text: #1a1a1a;
+  --color-button-hover-bg: #e9ecef;
+  --color-button-border: #007bff;
+}
+
+/* ----------------------- */
+/* 🌐 استایل عمومی */
+/* ----------------------- */
+
+:root {
+    font-family: 'Courier New', Courier, monospace;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body::-webkit-scrollbar-button{
+  display: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ----------------------- */
+/* 🧭 لینک‌ها */
+/* ----------------------- */
+
+a {
+  color: var(--color-link);
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+/* ----------------------- */
+/* 🔘 دکمه‌ها */
+/* ----------------------- */
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  background-color: var(--color-button-hover-bg);
+  border-color: var(--color-button-border);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 3px solid var(--color-button-border);
+}
+
+/* ----------------------- */
+/* 🧭 Navbar */
+/* ----------------------- */
+
+.navbar {
+  background-color: var(--color-navbar-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .items-div .div:hover {
+  background-color: var(--color-navbar-hover);
+}
+
+/* لینک فعال */
+.active-NavLink {
+  width: 140px;
+  height: 80px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-active-bg);
+  border-bottom: .3px solid var(--color-active-border);
+  transition: all 0.3s ease;
+}
+
+.footer{
+  color: var(--color-text);
+  font-weight: 100;
+}
