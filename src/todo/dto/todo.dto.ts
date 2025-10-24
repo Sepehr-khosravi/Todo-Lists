@@ -31,12 +31,12 @@ export class DtoEdit{
     @IsNotEmpty()
     @IsString()
     @MinLength(6)
-    title: string;
+    title: string ;
 
     @IsNotEmpty()
     @IsString()
     @MinLength(10)
-    description: string;
+    description: string ;
     
     @IsNotEmpty()
     status : Status;

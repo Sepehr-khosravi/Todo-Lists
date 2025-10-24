@@ -5,9 +5,10 @@ import { DtoAdd, DtoDelete, DtoEdit } from "./dto";
 @Injectable()
 export class TodoService {
     constructor(private prisma: PrismaService) { };
+
     async Get(userId: string) {
         try {
-            const Todos = await this.prisma.todo.findMany({
+            const todos = await this.prisma.todo.findMany({
                 where: { userId },
                 include: {
                     user: {
@@ -18,17 +19,18 @@ export class TodoService {
                         }
                     }
                 }
+            });
+
+            if (!todos || todos.length === 0) {
+                return { message: "No todos found", data: [] };
             }
-            );
-            if (!Todos.length) {
-                throw new NotFoundException("Todos Not found.");
-            }
-            return { message: "ok", data: Todos };
+
+            return { message: "ok", data: todos };
         }
         catch (e: any) {
             if (e instanceof ConflictException || e instanceof NotFoundException) throw e;
             console.log("Get error : ", e);
-            throw new InternalServerErrorException("somthing bad happended!")
+            throw new InternalServerErrorException("Something bad happened!");
         }
     }
 
@@ -37,44 +39,20 @@ export class TodoService {
             const check = await this.prisma.todo.findFirst({
                 where: {
                     title: dto.title,
-                    description: dto.description,
                     userId: dto.userId
-                },
-                include: {
-                    user: false
                 }
             });
-            if (check) {
-                throw new ConflictException("Invalid data");
-            }
-            const newTodo = await this.prisma.todo.create({
-                data: dto ,
-                include : {user : false}
-            });
-            return { message: "OK", data: newTodo };
-        }
-        catch (e: any) {
-            if (e instanceof ConflictException || e instanceof NotFoundException) throw e;
-            console.log("Add ErorrL ", e);
-            throw new InternalServerErrorException("Internal Server Error!")
-        }
-    }
 
-    async Edit(dto: DtoEdit) {
-        try {
-            const check = await this.prisma.todo.findFirst({
-                where: { id: dto.todoId },
-                include: { user: false }
-            });
-            if (!check) {
-                throw new NotFoundException("Todo not found.!");
+            if (check) {
+                throw new ConflictException("Todo with this title already exists for this user");
             }
-            const updatedTodo = await this.prisma.todo.update({
-                where: { id: dto.todoId },
+
+            const newTodo = await this.prisma.todo.create({
                 data: {
                     title: dto.title,
                     description: dto.description,
-                    status: dto.status
+                    userId: dto.userId,
+                    status: 'PENDING' 
                 },
                 include: {
                     user: {
@@ -86,26 +64,77 @@ export class TodoService {
                     }
                 }
             });
+
+            return { message: "OK", data: newTodo };
+        }
+        catch (e: any) {
+            if (e instanceof ConflictException) throw e;
+            console.log("Add Error: ", e);
+            throw new InternalServerErrorException("Internal Server Error!");
+        }
+    }
+
+    async Edit(dto: DtoEdit) {
+        try {
+            const check = await this.prisma.todo.findFirst({
+                where: { id: dto.todoId }
+            });
+
+            if (!check) {
+                throw new NotFoundException("Todo not found!");
+            }
+
+            const updateData: any = {};
+            if (dto.title !== undefined) updateData.title = dto.title;
+            if (dto.description !== undefined) updateData.description = dto.description;
+            if (dto.status !== undefined) updateData.status = dto.status;
+            // updateData.status = dto.status ? dto.status : null;
+
+            const updatedTodo = await this.prisma.todo.update({
+                where: { id: dto.todoId },
+                data: updateData,
+                include: {
+                    user: {
+                        select: {
+                            id: true,
+                            username: true,
+                            email: true,
+                        }
+                    }
+                }
+            });
+
             return { message: "Ok", data: updatedTodo };
         }
         catch (e: any) {
-            if (e instanceof ConflictException || e instanceof NotFoundException) throw e;
+            if (e instanceof NotFoundException) throw e;
             console.log("Edit Error: ", e);
             throw new InternalServerErrorException("Internal Server Error!");
         }
     }
 
-    async Delete(dto : DtoDelete){
-        try{
-            await this.prisma.todo.delete({
-                where : {id : dto.todoId},
-                include : {user : false}
+    async Delete(dto: DtoDelete) {
+        try {
+            const todo = await this.prisma.todo.findFirst({
+                where: { id: dto.todoId }
             });
-            return {message : "ok"};
+
+            if (!todo) {
+                throw new NotFoundException("Todo Not Found");
+            }
+
+            await this.prisma.todo.delete({
+                where: { id: dto.todoId }
+            });
+
+            return { message: "ok" };
         }
-        catch(e : any){
-            if(e.code === "P2025") throw new NotFoundException("Todo Not Found.,");
-            console.log("Delete Error : " , e);
+        catch (e: any) {
+            if (e instanceof NotFoundException) throw e;
+            if (e.code === "P2025") {
+                throw new NotFoundException("Todo Not Found");
+            }
+            console.log("Delete Error : ", e);
             throw new InternalServerErrorException("Internal Server Error!");
         }
     }

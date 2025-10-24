@@ -22,7 +22,7 @@ export class TodoController {
         return this.todoService.Edit(dto);
     }
 
-    @Delete("delete")
+    @Post("delete")
     Delete(@Body() dto : DtoDelete){
         return this.todoService.Delete(dto);
     }

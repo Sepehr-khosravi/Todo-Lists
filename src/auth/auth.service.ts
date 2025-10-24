@@ -32,7 +32,7 @@ export class AuthService {
                 { secret: this.config.get("JWT_KEY"), expiresIn: "1d" }
             )
             if (!token) {
-                throw new InternalServerErrorException("somthing bad happened!", {
+                throw new InternalServerErrorException("somthing bad happened!(token)", {
                     cause: new Error(),
                     description: "Internal Server Error!"
                 });
@@ -41,11 +41,13 @@ export class AuthService {
             return {
                 message: "Welcome!",
                 token: token,
-                user: data
+                data: data
             }
         }
         catch (e: any) {
-            if (e instanceof ConflictException || e instanceof BadRequestException) throw e;
+            if (e instanceof ConflictException || e instanceof BadRequestException){
+                return;
+            } ;
             console.log("signin error : ", e);
             throw new InternalServerErrorException("somthing bad happened!");
         }
@@ -82,10 +84,12 @@ export class AuthService {
                 });
             }
             const { password, ...data } = newUser;
-            return { message: "Welcome", token: token, dataUser: data };
+            return { message: "Welcome", token: token, data: data };
         }
         catch (e: any) {
-            if (e instanceof ConflictException) throw e;
+            if (e instanceof ConflictException){
+                return;
+            };
             console.log("signup error :", e);
             throw new InternalServerErrorException("somthing bad happened!");
         }
