@@ -1,3 +1,6 @@
+خب خب اول از همه بنده یه نکته ای عرض کنم . در قسمت فرانت اند . قسمت هایی از فایل های Todo.tsx , Todos.tsx با هوش مصنوعی deepseek (فقط قسمت های ui ) ولی بقیه ی بخش ها که مربوط به مدیریت api میشود توسط خوده بنده ساخته میشود
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
